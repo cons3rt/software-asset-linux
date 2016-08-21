@@ -51,3 +51,4 @@ echo "Non-zero exit codes will tell CONS3RT to error out and notify you there wa
 
 echo "Exiting with code ${exitCode}"
 exit #{exitCode}
+

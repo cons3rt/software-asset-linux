@@ -30,9 +30,6 @@ packageList="vim emacs"
 # Asset media directory
 mediaDir=
 
-# ETT Password File
-ettPasswordFile="/root/ett.pwd"
-
 ####################### END GLOBAL VARIABLES #######################
 
 # Logging functions
@@ -164,7 +161,7 @@ function main() {
 
     # Check the results of commands from this script, return error if an error is found
     for res in "${resultSet[@]}" ; do
-        if [ ${res} -ne 0 ] ; then logErr "Non-zero exit code found: ${resultCheck}"; return 1; fi
+        if [ ${res} -ne 0 ] ; then logErr "Non-zero exit code found: ${res}"; return 1; fi
     done
 
     # Exit successfully

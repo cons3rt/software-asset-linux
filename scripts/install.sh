@@ -15,9 +15,6 @@ logFile="${logDir}/${logTag}-$(date "+%Y%m%d-%H%M%S").log"
 
 ######################### GLOBAL VARIABLES #########################
 
-# Array to maintain exit codes of RPM install commands
-resultSet=();
-
 # The linux distro
 distroId=
 distroVersion=
@@ -29,6 +26,12 @@ packageList="vim emacs"
 
 # Asset media directory
 mediaDir=
+
+# Deployment home
+deploymentHome=
+
+# Array to maintain exit codes of RPM install commands
+resultSet=();
 
 ####################### END GLOBAL VARIABLES #######################
 
@@ -95,7 +98,7 @@ function get_distro() {
         if [ -z "${ID}" ] ; then logErr "Linux distro ID not found"; return 1;
         else distroId="${ID}"; fi;
         if [ -z "${VERSION_ID}" ] ; then logErr "Linux distro version ID not found"; return 2
-        else distroVersion="${VERSION_ID}"; fi;
+        else distroVersion=$(echo "${VERSION_ID}" | awk -F . '{print $1}'); fi;
         if [ -z "${ID_LIKE}" ] ; then logErr "Linux distro family not found"; return 3
         else distroFamily="${ID_LIKE}"; fi;
     elif [ -f /etc/centos-release ] ; then
@@ -103,10 +106,14 @@ function get_distro() {
         distroVersion=$(cat /etc/centos-release | sed "s|Linux||" | awk '{print $3}' | awk -F . '{print $1}')
         distroFamily="rhel fedora"
     elif [ -f /etc/redhat-release ] ; then
-        distroId="rhel"
+        distroId="redhat"
         distroVersion=$(cat /etc/redhat-release | awk '{print $7}' | awk -F . '{print $1}')
         distroFamily="rhel fedora"
     else logErr "Unable to determine the Linux distro or version"; return 4; fi;
+    if [[ ${distroId} == "rhel" ]] ; then
+        logInfo "Found distroId: rhel, setting to redhat..."
+        distroId="redhat"
+    fi
     logInfo "Detected Linux Distro ID: ${distroId}"
     logInfo "Detected Linux Version ID: ${distroVersion}"
     logInfo "Detected Linux Family: ${distroFamily}"

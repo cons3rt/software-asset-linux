@@ -4,8 +4,8 @@
 if [ -f /etc/bashrc ] ; then
     . /etc/bashrc
 fi
-if [ -f /etc/environment ] ; then
-    . /etc/environment
+if [ -f /etc/profile ] ; then
+    . /etc/profile
 fi
 
 # Establish a log file and log tag

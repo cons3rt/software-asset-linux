@@ -10,7 +10,7 @@ fi
 
 # Establish a log file and log tag
 logTag="sample-linux-asset"
-logDir="/var/log/cons3rt"
+logDir="/opt/cons3rt-agent/log"
 logFile="${logDir}/${logTag}-$(date "+%Y%m%d-%H%M%S").log"
 
 ######################### GLOBAL VARIABLES #########################
